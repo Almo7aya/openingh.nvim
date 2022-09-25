@@ -18,7 +18,7 @@ function M.get_username_reponame(url)
     local splitted_username_and_reponame = M.split(splitted_user_repo, "/")
     local username_and_reponame = {
       username = splitted_username_and_reponame[1],
-      reponame = M.split(splitted_username_and_reponame[2], ".")[1],
+      reponame = string.gsub(splitted_username_and_reponame[2], ".git", ""),
     }
 
     return username_and_reponame
@@ -26,7 +26,7 @@ function M.get_username_reponame(url)
     local splitted_username_and_reponame = M.split(url, "/")
     local username_and_reponame = {
       username = splitted_username_and_reponame[3],
-      reponame = M.split(splitted_username_and_reponame[4], ".")[1],
+      reponame = string.gsub(splitted_username_and_reponame[4], ".git", ""),
     }
 
     return username_and_reponame
