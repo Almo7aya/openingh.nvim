@@ -10,6 +10,12 @@ function M.split(string, char)
   return array
 end
 
+-- trim extra spaces and newlines
+-- useful when working with git commands returned values
+function M.trim(string)
+   return (string:gsub("^%s*(.-)%s*$", "%1"))
+end
+
 -- returns the username and the reponame form the origin url in a table
 function M.get_username_reponame(url)
   -- ssh has an @ in the url
@@ -18,7 +24,7 @@ function M.get_username_reponame(url)
     local splitted_username_and_reponame = M.split(splitted_user_repo, "/")
     local username_and_reponame = {
       username = splitted_username_and_reponame[1],
-      reponame = string.gsub(splitted_username_and_reponame[2], ".git", ""),
+      reponame = M.trim(string.gsub(splitted_username_and_reponame[2], ".git", "")),
     }
 
     return username_and_reponame
@@ -26,11 +32,24 @@ function M.get_username_reponame(url)
     local splitted_username_and_reponame = M.split(url, "/")
     local username_and_reponame = {
       username = splitted_username_and_reponame[3],
-      reponame = string.gsub(splitted_username_and_reponame[4], ".git", ""),
+      reponame = M.trim(string.gsub(splitted_username_and_reponame[4], ".git", "")),
     }
 
     return username_and_reponame
   end
+end
+
+function M.get_defualt_branch()
+  -- will return origin/[branch_name]
+  local branch_with_origin = vim.fn.system("git rev-parse --abbrev-ref origin/HEAD")
+  local branch_name = M.split(branch_with_origin, "/")[2]
+
+  return M.trim(branch_name)
+end
+
+function M.get_current_branch()
+  local current_branch_name = vim.fn.system("git rev-parse --abbrev-ref HEAD")
+  return M.trim(current_branch_name)
 end
 
 -- opens a url in the correct OS

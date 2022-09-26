@@ -35,6 +35,18 @@ function M.openRepo()
   end
 
   local repo_url = M.gh_url .. M.username .. "/" .. M.reponame
+
+  -- check if not the default branch add it to the url
+  local current_branch_name = utils.get_current_branch()
+  local default_branch_name = utils.get_defualt_branch()
+
+  print(current_branch_name)
+  print(default_branch_name)
+
+  if current_branch_name ~= default_branch_name then
+    repo_url = repo_url .. "/tree/" .. current_branch_name
+  end
+
   local result = utils.open_url(repo_url)
 
   if result then
