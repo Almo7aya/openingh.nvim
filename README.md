@@ -14,7 +14,7 @@ Opens the current file or project page in GitHub.
 [packer.nvim](https://github.com/wbthomason/packer.nvim)
 
 ```lua
-  use "almo7aya/neogruvbox.nvim"
+  use "almo7aya/openingh.nvim"
 ```
 
 ## Commands
