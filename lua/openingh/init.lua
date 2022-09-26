@@ -27,7 +27,8 @@ function M.openFile()
 
   local file_path = utils.get_current_relative_file_path()
 
-  if file_path:len() == 0 then
+  -- if there is no buffer opened
+  if file_path == "/" then
     print("There is no active file to open!")
     return
   end
