@@ -1,4 +1,4 @@
-# openingh.nvim :octocat:
+# openingh.nvim
 Opens the current project or file page in GitHub.
   - Features
     - Supports MacOS, Linux, and maybe Windows 🤷‍♂️
