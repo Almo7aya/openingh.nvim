@@ -1,0 +1,11 @@
+repos:
+  - repo: local
+    hooks:
+      - id: stylua
+        name: StyLua format
+        language: rust
+        entry: make fmt
+      - id: luacheck
+        name: Linting luacheck
+        language: lua
+        entry: make lint
