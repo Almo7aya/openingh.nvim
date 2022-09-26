@@ -3,6 +3,8 @@ if vim.g.openingh then
 end
 vim.g.openingh = true
 
+require("openingh").setup()
+
 vim.api.nvim_create_user_command("OpenInGHFile", function()
   require("openingh").openFile()
 end, {})
