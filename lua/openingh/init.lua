@@ -33,9 +33,9 @@ function M.openFile()
     return
   end
 
-  local current_branch_name = utils.get_current_branch()
+  local current_branch_name_or_commit_hash = utils.get_current_branch_or_commit()
 
-  local file_page_url = M.repo_url .. "/blob/" .. current_branch_name .. file_path
+  local file_page_url = M.repo_url .. "/blob/" .. current_branch_name_or_commit_hash .. file_path
 
   local result = utils.open_url(file_page_url)
 
@@ -52,9 +52,9 @@ function M.openRepo()
     return
   end
 
-  local current_branch_name = utils.get_current_branch()
+  local current_branch_name_or_commit_hash = utils.get_current_branch_or_commit()
 
-  local repo_page_url = M.repo_url .. "/tree/" .. current_branch_name
+  local repo_page_url = M.repo_url .. "/tree/" .. current_branch_name_or_commit_hash
 
   local result = utils.open_url(repo_page_url)
 

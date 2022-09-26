@@ -48,10 +48,17 @@ function M.get_defualt_branch()
   return M.trim(branch_name)
 end
 
--- get the active local branch
-function M.get_current_branch()
-  local current_branch_name = vim.fn.system("git rev-parse --abbrev-ref HEAD")
-  return M.trim(current_branch_name)
+-- get the active local branch or commit when HEAD is detached
+function M.get_current_branch_or_commit()
+  local current_branch_name = M.trim(vim.fn.system("git rev-parse --abbrev-ref HEAD"))
+
+  -- HEAD is detached returing commit hash
+  if current_branch_name ~= "HEAD" then
+    return current_branch_name
+  end
+
+  local current_commit_hash = vim.fn.system("git rev-parse HEAD")
+  return M.trim(current_commit_hash)
 end
 
 -- get the active buf relative file path form the .git
