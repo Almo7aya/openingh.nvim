@@ -26,6 +26,12 @@ function M.openFile()
   end
 
   local file_path = utils.get_current_relative_file_path()
+
+  if file_path:len() == 0 then
+    print("There is no active file to open!")
+    return
+  end
+
   local current_branch_name = utils.get_current_branch()
 
   local file_page_url = M.repo_url .. "/blob/" .. current_branch_name .. file_path
