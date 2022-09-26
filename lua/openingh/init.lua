@@ -2,8 +2,6 @@ local utils = require("openingh.utils")
 local M = {}
 
 function M.setup()
-  -- TODO - 1: add the repo path to global var
-  M.cwd = vim.fn.getcwd()
   local repo_url = vim.fn.system("git config --get remote.origin.url")
 
   if repo_url:len() == 0 then
@@ -12,20 +10,34 @@ function M.setup()
     return
   end
 
+  -- init global variables
   local username_and_reponame = utils.get_username_reponame(repo_url)
   M.username = username_and_reponame.username
   M.reponame = username_and_reponame.reponame
   M.gh_url = "https://github.com/"
+  M.repo_url = M.gh_url .. M.username .. "/" .. M.reponame
 end
 
 function M.openFile()
-  -- TODO - 1: get the url from git folder
-  -- TODO - 2: get the current line in the buffer and add it to the file url
   -- TODO - 3: get the selected range in the buffer and add it to the file url
   if M.is_no_git_origin then
     utils.print_no_remote_message()
     return
   end
+
+  local file_path = utils.get_current_relative_file_path()
+  local current_branch_name = utils.get_current_branch()
+
+  local file_page_url = M.repo_url .. "/blob/" .. current_branch_name .. file_path
+
+  local result = utils.open_url(file_page_url)
+
+  if result then
+    print("Opening url " .. file_page_url)
+  else
+    print("Unknown OS please open report")
+  end
+
 end
 
 function M.openRepo()
@@ -34,23 +46,20 @@ function M.openRepo()
     return
   end
 
-  local repo_url = M.gh_url .. M.username .. "/" .. M.reponame
+  local repo_page_url = M.repo_url
 
   -- check if not the default branch add it to the url
   local current_branch_name = utils.get_current_branch()
   local default_branch_name = utils.get_defualt_branch()
 
-  print(current_branch_name)
-  print(default_branch_name)
-
   if current_branch_name ~= default_branch_name then
-    repo_url = repo_url .. "/tree/" .. current_branch_name
+    repo_page_url = M.repo_url .. "/tree/" .. current_branch_name
   end
 
-  local result = utils.open_url(repo_url)
+  local result = utils.open_url(repo_page_url)
 
   if result then
-    print("Opening url " .. repo_url)
+    print("Opening url " .. repo_page_url)
   else
     print("Unknown OS please open report")
   end

@@ -1,13 +1,12 @@
 if vim.g.openingh then
-    return
+  return
 end
 vim.g.openingh = true
 
 vim.api.nvim_create_user_command("OpenInGHFile", function()
-    require("openingh").openFile()
+  require("openingh").openFile()
 end, {})
 
 vim.api.nvim_create_user_command("OpenInGHRepo", function()
-    require("openingh"):openRepo()
+  require("openingh"):openRepo()
 end, {})
-

@@ -13,7 +13,7 @@ end
 -- trim extra spaces and newlines
 -- useful when working with git commands returned values
 function M.trim(string)
-   return (string:gsub("^%s*(.-)%s*$", "%1"))
+  return (string:gsub("^%s*(.-)%s*$", "%1"))
 end
 
 -- returns the username and the reponame form the origin url in a table
@@ -39,6 +39,7 @@ function M.get_username_reponame(url)
   end
 end
 
+-- get the remote default branch
 function M.get_defualt_branch()
   -- will return origin/[branch_name]
   local branch_with_origin = vim.fn.system("git rev-parse --abbrev-ref origin/HEAD")
@@ -47,15 +48,26 @@ function M.get_defualt_branch()
   return M.trim(branch_name)
 end
 
+-- get the active local branch
 function M.get_current_branch()
   local current_branch_name = vim.fn.system("git rev-parse --abbrev-ref HEAD")
   return M.trim(current_branch_name)
 end
 
+-- get the active buf relative file path form the .git
+function M.get_current_relative_file_path()
+  -- we only want the active buffer name
+  local absolute_file_path = vim.api.nvim_buf_get_name(0)
+  local git_path = vim.fn.system("git rev-parse --show-toplevel")
+
+  local relative_file_path = "/" .. string.sub(absolute_file_path, git_path:len() + 1)
+
+  return relative_file_path
+end
+
 -- opens a url in the correct OS
 function M.open_url(url)
-  local os = M.get_os()
-
+  local os = vim.loop.os_uname().sysname
   if os == "Darwin" then
     io.popen("open " .. url)
     return true
@@ -72,11 +84,6 @@ function M.open_url(url)
   end
 
   return false
-end
-
-function M.get_os()
-  local os_name = vim.loop.os_uname().sysname
-  return os_name
 end
 
 function M.print_no_remote_message()
