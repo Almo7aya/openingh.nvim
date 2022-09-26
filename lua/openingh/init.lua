@@ -37,7 +37,6 @@ function M.openFile()
   else
     print("Unknown OS please open report")
   end
-
 end
 
 function M.openRepo()
