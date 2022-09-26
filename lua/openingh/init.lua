@@ -46,10 +46,9 @@ function M.openRepo()
     return
   end
 
-  local repo_page_url = M.repo_url
   local current_branch_name = utils.get_current_branch()
 
-  repo_page_url = M.repo_url .. "/tree/" .. current_branch_name
+  local repo_page_url = M.repo_url .. "/tree/" .. current_branch_name
 
   local result = utils.open_url(repo_page_url)
 
