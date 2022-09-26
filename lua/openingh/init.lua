@@ -19,7 +19,6 @@ function M.setup()
 end
 
 function M.openFile()
-  -- TODO - 3: get the selected range in the buffer and add it to the file url
   if M.is_no_git_origin then
     utils.print_no_remote_message()
     return
@@ -33,15 +32,14 @@ function M.openFile()
     return
   end
 
+  local line_number = utils.get_line_number_from_buf()
   local current_branch_name_or_commit_hash = utils.get_current_branch_or_commit()
 
-  local file_page_url = M.repo_url .. "/blob/" .. current_branch_name_or_commit_hash .. file_path
+  local file_page_url = M.repo_url .. "/blob/" .. current_branch_name_or_commit_hash .. file_path .. "#L" .. line_number
 
   local result = utils.open_url(file_page_url)
 
-  if result then
-    print("Opening url " .. file_page_url)
-  else
+  if result == false then
     print("Unknown OS please open report")
   end
 end
@@ -58,9 +56,7 @@ function M.openRepo()
 
   local result = utils.open_url(repo_page_url)
 
-  if result then
-    print("Opening url " .. repo_page_url)
-  else
+  if result == false then
     print("Unknown OS please open report")
   end
 end

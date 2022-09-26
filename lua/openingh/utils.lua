@@ -72,6 +72,12 @@ function M.get_current_relative_file_path()
   return relative_file_path
 end
 
+-- get the line number in the buffer
+function M.get_line_number_from_buf()
+  local lineNum = vim.api.nvim__buf_stats(0).current_lnum
+  return lineNum
+end
+
 -- opens a url in the correct OS
 function M.open_url(url)
   local os = vim.loop.os_uname().sysname
