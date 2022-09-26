@@ -52,7 +52,7 @@ end
 function M.get_current_branch_or_commit()
   local current_branch_name = M.trim(vim.fn.system("git rev-parse --abbrev-ref HEAD"))
 
-  -- HEAD is detached returing commit hash
+  -- HEAD is detached
   if current_branch_name ~= "HEAD" then
     return current_branch_name
   end
