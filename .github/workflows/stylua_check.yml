@@ -1,4 +1,4 @@
-name: lint
+name: lint with stylua
 on:
   workflow_dispatch:
   pull_request:
