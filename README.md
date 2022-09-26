@@ -1,5 +1,5 @@
 # openingh.nvim
-Opens the current project or file page in GitHub.
+Opens the current file or project page in GitHub.
   - Features
     - Supports MacOS, Linux, and maybe Windows 🤷‍♂️
     - Works with detaches HEAD and support checked out branches
