@@ -11,7 +11,7 @@ Opens the current file or project page in GitHub.
 
 ## Installation
 
-[packer](https://github.com/wbthomason/packer.nvim)
+[packer.nvim](https://github.com/wbthomason/packer.nvim)
 
 ```lua
   use "almo7aya/neogruvbox.nvim"
@@ -38,9 +38,15 @@ vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { expr = true, 
 ```
 
 ## TODO
+
   - [x] Support the current file cursor position
   - [ ] Support visual mode to open a file in range selection 
 
+## Contribution
+
+Feel free to open an issue or a pull request if you have any suggestion or improvements 
+
 ## License
+
 [MIT](./LICENSE)
 
