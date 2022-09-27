@@ -20,10 +20,10 @@ Opens the current file or project page in GitHub.
 [wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
 
 ```lua
-  -- init.lua
-  require("packer").startup(function()
-    use "almo7aya/openingh.nvim"
-  end)
+-- init.lua
+require("packer").startup(function()
+  use "almo7aya/openingh.nvim"
+end)
 ```
 
 ## Commands
