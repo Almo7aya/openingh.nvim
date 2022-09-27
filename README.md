@@ -11,10 +11,15 @@ Opens the current file or project page in GitHub.
 
 ## Installation
 
-[packer.nvim](https://github.com/wbthomason/packer.nvim)
+#### Example with Packer
+
+[wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
 
 ```lua
-  use "almo7aya/openingh.nvim"
+  -- init.lua
+  require("packer").startup(function()
+    use "almo7aya/openingh.nvim"
+  end)
 ```
 
 ## Commands
