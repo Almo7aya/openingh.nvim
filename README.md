@@ -5,6 +5,8 @@ Opens the current file or project page in GitHub.
     - Works with detaches HEAD and support checked out branches or forks
     - Automatically selects the correct line number in the file page 
 
+![](./gifs/demo.gif)
+
 ## Requirements
 
   - Neovim 0.7.2+
