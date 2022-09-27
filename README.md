@@ -2,7 +2,7 @@
 Opens the current file or project page in GitHub.
   - Features
     - Supports MacOS, Linux, and maybe Windows 🤷‍♂️
-    - Works with detaches HEAD and support checked out branches or forks
+    - Works with detaches HEAD and supports checked out branches or forks
     - Automatically selects the correct line number in the file page 
 
   - Demo
