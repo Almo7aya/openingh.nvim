@@ -1,0 +1,54 @@
+*openingh.txt*        Open file or project in github for neovim written in lua
+
+Author: almo7aya (Ali Almohaya) <alialmohaya@gmail.com>
+Version: 1.0.0
+
+==============================================================================
+CONTENTS                                                    *openingh*
+
+  1. Introduction                          |openingh-introduction|
+  2. Requirements                          |openingh-requirements|
+  3. Commands                              |openingh-commands|
+  4. Usage                                 |openingh-usage|
+  5. License                               |openingh-license|
+
+==============================================================================
+ 1. INTRODUCTION                               *openingh-introduction*
+
+ Opens the current file or project page in GitHub.
+   - Features
+     - Supports MacOS, Linux, and maybe Windows 🤷‍♂️
+     - Works with detaches HEAD and support checked out branches
+     - Automatically selects the correct line number in the file page 
+
+
+==============================================================================
+ 2. REQUIREMENTS                               *openingh-requirements*
+
+  - Neovim 0.7.2+
+
+==============================================================================
+ 3. COMMANDS                                   *openingh-commands*
+
+ :OpenInGHRepo 
+   - Opens the project's git repository page in GitHub.
+
+ :OpenInGHFile
+   - Opens the current file page in GitHub.
+
+==============================================================================
+ 4. USAGE                                       *openingh-usage*
+
+ You can call the commands directly or define mappings them:
+
+  -- for repository page
+  vim.api.nvim_set_keymap("n", "<Leader>gr", ":OpenInGHRepo <CR>", { expr = true, noremap = true })
+
+  -- for current file page
+  vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { expr = true, noremap = true })
+
+==============================================================================
+ 5. LICENSE                                    *openingh-license*
+
+ MIT
+
