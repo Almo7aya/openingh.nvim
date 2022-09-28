@@ -2,7 +2,9 @@ local utils = require("openingh.utils")
 local M = {}
 
 function M.setup()
-  local repo_url = vim.fn.system("git config --get remote.origin.url")
+  -- get the current working directory and set the url
+  local current_buffer = vim.fn.expand('%:p:h')
+  local repo_url = vim.fn.system("git -C " ..current_buffer.. " config --get remote.origin.url" )
 
   if repo_url:len() == 0 then
     M.is_no_git_origin = true
@@ -19,6 +21,8 @@ function M.setup()
 end
 
 function M.openFile()
+  -- make sure to update the current directory
+  M.setup()
   if M.is_no_git_origin then
     utils.print_no_remote_message()
     return
@@ -45,6 +49,8 @@ function M.openFile()
 end
 
 function M.openRepo()
+  -- make sure to update the current directory
+  M.setup()
   if M.is_no_git_origin then
     utils.print_no_remote_message()
     return
