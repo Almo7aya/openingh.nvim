@@ -1,5 +1,9 @@
 # openingh.nvim
 Opens the current file or project page in GitHub.
+
+![Lua](https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua) [![lint with luacheck](https://img.shields.io/github/workflow/status/gbprod/yanky.nvim/Integration?style=for-the-badge)](https://github.com/Almo7aya/openingh.nvim/actions/workflows/lint.yml)
+
+
   - Features
     - Supports MacOS, Linux, and maybe Windows 🤷‍♂️
     - Works with detached HEAD and supports checked out branches or forks
