@@ -81,15 +81,16 @@ end
 -- opens a url in the correct OS
 function M.open_url(url)
   if vim.fn.has("mac") then
-    io.popen("open " .. url)
+    vim.fn.system("open " .. url)
     return true
   elseif vim.fn.has("win64") or vim.fn.has("win32") then
-    io.popen("start " .. url)
+    vim.fn.system("start " .. url)
     return true
   elseif vim.fn.has("wsl") then
-    io.popen("explorer.exe " .. url)
+    vim.fn.system("explorer.exe " .. url)
+    return true
   elseif vim.fn.has("linux") then
-    io.popen("xdg-open " .. url)
+    vim.fn.system("xdg-open " .. url)
     return true
   end
   
