@@ -80,19 +80,27 @@ end
 
 -- opens a url in the correct OS
 function M.open_url(url)
-  local os = vim.loop.os_uname().sysname
-  if os == "Darwin" then
-    io.popen("open " .. url)
+  -- order here matters
+  -- wsl must come before win
+  -- wsl must come before linux
+
+  if vim.fn.has("mac") == 1 then
+    vim.fn.system("open " .. url)
     return true
   end
 
-  if os == "Windows" then
-    io.popen("start " .. url)
+  if vim.fn.has("wsl") == 1 then
+    vim.fn.system("explorer.exe " .. url)
     return true
   end
 
-  if os == "Linux" then
-    io.popen("xdg-open " .. url)
+  if vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 then
+    vim.fn.system("start " .. url)
+    return true
+  end
+
+  if vim.fn.has("linux") == 1 then
+    vim.fn.system("xdg-open " .. url)
     return true
   end
 
