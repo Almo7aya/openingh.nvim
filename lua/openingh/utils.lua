@@ -29,7 +29,9 @@ function M.parse_gh_remote(url)
   local ssh = { string.find(url, ".*git@(.*)[:/]([^/]*)/([^%s/]*)") }
 
   local matches = http[1] == nil and ssh or http
-  if matches[1] == nil then return nil end
+  if matches[1] == nil then
+    return nil
+  end
 
   local _, _, host, user_or_org, reponame = unpack(matches)
   return { host = host, user_or_org = user_or_org, reponame = string.gsub(reponame, ".git", "") }
