@@ -1,13 +1,14 @@
 # openingh.nvim
 Opens the current file or project page in GitHub.
 
-![Lua](https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua) [![lint with luacheck](https://img.shields.io/github/workflow/status/gbprod/yanky.nvim/Integration?style=for-the-badge)](https://github.com/Almo7aya/openingh.nvim/actions/workflows/lint.yml)
+![Lua](https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua) [![lint with luacheck](https://img.shields.io/github/workflow/status/almo7aya/openingh.nvim/lint%20with%20luacheck?style=for-the-badge)](https://github.com/Almo7aya/openingh.nvim/actions/workflows/lint.yml)
 
 
   - Features
-    - Supports MacOS, Linux, and maybe Windows 🤷‍♂️
+    - Supports macOS, Linux, Windows and WSL
     - Works with detached HEAD and supports checked out branches or forks
-    - Automatically selects the correct line number in the file page 
+    - Automatically selects the correct line number on the file page 
+    - Supports GitHub, GitHub Enterprise, GitLab, and Bitbucket  
 
   - Demo
 
@@ -54,11 +55,11 @@ vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { expr = true, 
 
   - [x] Support the current file cursor position
   - [ ] Support visual mode to open a file in range selection 
-  - [ ] Support support other version control websites 
+  - [x] Support other version control websites 
 
 ## Contribution
 
-Feel free to open an issue or a pull request if you have any suggestion or improvements 
+Feel free to open an issue or a pull request if you have any suggestions or improvements 
 
 ## License
 
