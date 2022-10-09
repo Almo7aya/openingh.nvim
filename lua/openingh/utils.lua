@@ -16,27 +16,19 @@ function M.trim(string)
   return (string:gsub("^%s*(.-)%s*$", "%1"))
 end
 
--- returns the username and the reponame form the origin url in a table
-function M.get_username_reponame(url)
-  -- ssh has an @ in the url
-  if string.find(url, "@") then
-    local splitted_user_repo = M.split(url, ":")[2]
-    local splitted_username_and_reponame = M.split(splitted_user_repo, "/")
-    local username_and_reponame = {
-      username = splitted_username_and_reponame[1],
-      reponame = M.trim(string.gsub(splitted_username_and_reponame[2], ".git", "")),
-    }
+-- returns a table with the host, user/org and the reponame given a github remote url
+function M.parse_gh_remote(url)
+  -- 3 capture groups for host, org/user and repo. whitespace is trimmed
+  local http = { string.find(url, "https://([^/]*)/([^/]*)/([^%s/]*)") }
+  local ssh = { string.find(url, "git@(.*):([^/]*)/([^%s/]*)") }
 
-    return username_and_reponame
-  else
-    local splitted_username_and_reponame = M.split(url, "/")
-    local username_and_reponame = {
-      username = splitted_username_and_reponame[3],
-      reponame = M.trim(string.gsub(splitted_username_and_reponame[4], ".git", "")),
-    }
-
-    return username_and_reponame
+  local matches = http[1] and http or ssh
+  if matches[1] == nil then
+    error("Cannot parse remote url")
   end
+
+  local _, _, host, user_or_org, reponame = table.unpack(matches)
+  return { host = host, user_or_org = user_or_org, reponame = string.gsub(reponame, ".git", "") }
 end
 
 -- get the remote default branch
