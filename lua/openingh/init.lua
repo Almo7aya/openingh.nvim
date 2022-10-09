@@ -12,12 +12,14 @@ function M.setup()
     return
   end
 
-  -- init global variables
-  local username_and_reponame = utils.get_username_reponame(repo_url)
-  M.username = username_and_reponame.username
-  M.reponame = username_and_reponame.reponame
-  M.gh_url = "https://github.com/"
-  M.repo_url = M.gh_url .. M.username .. "/" .. M.reponame
+  local gh = utils.parse_gh_remote(repo_url)
+  if gh == nil then
+    print("Error parsing GitHub remote URL")
+    vim.g.openingh = false
+    return
+  end
+
+  M.repo_url = string.format("https://%s/%s/%s", gh.host, gh.user_or_org, gh.reponame)
 end
 
 function M.openFile()
