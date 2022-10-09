@@ -13,6 +13,12 @@ function M.setup()
   end
 
   local gh = utils.parse_gh_remote(repo_url)
+  if gh == nil then
+    print("Error parsing GitHub remote URL")
+    vim.g.openingh = false
+    return
+  end
+
   M.repo_url = string.format("https://%s/%s/%s", gh.host, gh.user_or_org, gh.reponame)
 end
 
