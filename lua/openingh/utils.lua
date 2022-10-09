@@ -20,7 +20,7 @@ end
 -- nil is returned when the url cannot be parsed
 function M.parse_gh_remote(url)
   -- 3 capture groups for host, org/user and repo. whitespace is trimmed
-  -- when cloning with http://, gh redirects to https://, but remote is stays http
+  -- when cloning with http://, gh redirects to https://, but remote stays http
   local http = { string.find(url, "https?://([^/]*)/([^/]*)/([^%s/]*)") }
   -- ssh url can be of type:
   -- git@some.github.com:user_or_org/reponame.git
