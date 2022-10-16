@@ -3,12 +3,12 @@ if vim.g.openingh then
 end
 vim.g.openingh = true
 
-require("openingh").setup()
+local openingh = require("openingh")
 
 vim.api.nvim_create_user_command("OpenInGHFile", function()
-  require("openingh"):openFile()
+  openingh:openFile()
 end, {})
 
 vim.api.nvim_create_user_command("OpenInGHRepo", function()
-  require("openingh"):openRepo()
+  openingh:openRepo()
 end, {})
