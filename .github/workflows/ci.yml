@@ -37,7 +37,7 @@ jobs:
 
       - name: Run tests
         run: |
-          xdg-open() { export OPENINGH_RESULT=$0 }
+          xdg-open() { export OPENINGH_RESULT=$0 };
           export PATH="${PWD}/_neovim/bin:${PATH}"
           nvim --headless -u tests/minimal.vim  -c "q"
           make test
