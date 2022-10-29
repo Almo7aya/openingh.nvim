@@ -29,7 +29,6 @@ describe("openingh should open", function()
   it("repo on :OpenInGHRepo", function()
     vim.cmd("OpenInGHRepo")
     local status = vim.g.OPENINGH_RESULT
-    print(status)
     assert.truthy(status)
   end)
 
@@ -38,7 +37,6 @@ describe("openingh should open", function()
     vim.cmd("OpenInGHFile")
 
     local status = vim.g.OPENINGH_RESULT
-    print(status)
     assert.truthy(status)
   end)
 end)
