@@ -1,18 +1,24 @@
-local eq = assert.are.same
-local busted = require("plenary/busted")
-
-before_each(function()
-  vim.cmd([[packadd openingh.nvim]])
-end)
-
 describe("busted should run ", function()
   it(" should start test", function()
+    vim.cmd([[packadd openingh.nvim]])
     local status = require("plenary.reload").reload_module(".nvim")
-    eq(status, nil)
+    assert.are.same(status, nil)
   end)
 
   it("openingh should be available", function()
     local status = require("openingh")
+    assert.truthy(status)
+  end)
+end)
+
+describe("openingh should set user commands", function()
+  it("should set :OpenInGHRepo", function()
+    local status = vim.fn.exists(":OpenInGHRepo")
+    assert.truthy(status)
+  end)
+
+  it("should set :OpenInGHFile", function()
+    local status = vim.fn.exists(":OpenInGHFile")
     assert.truthy(status)
   end)
 end)
