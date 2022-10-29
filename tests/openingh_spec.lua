@@ -29,7 +29,7 @@ describe("openingh should open ", function()
     vim.cmd("OpenInGHRepo")
     local status = vim.fn.system("echo $OpenInGHRepo")
 
-    print(status)
+    print(vim.inspect(status))
 
     assert.truthy(status)
   end)
@@ -40,7 +40,7 @@ describe("openingh should open ", function()
     vim.cmd("OpenInGHFile")
     local status = vim.fn.system("echo $OpenInGHFile")
 
-    print(status)
+    print(vim.inspect(status))
 
     assert.truthy(status)
   end)
