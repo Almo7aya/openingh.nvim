@@ -18,5 +18,4 @@ set indentexpr=
 
 lua << EOF
 require("plenary/busted")
-require("openingh.nvim").setup()
 EOF
