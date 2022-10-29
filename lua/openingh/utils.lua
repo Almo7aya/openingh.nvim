@@ -98,7 +98,6 @@ function M.open_url(url)
   end
 
   if vim.fn.has("linux") == 1 then
-    print("linux")
     vim.fn.system("xdg-open " .. url)
     return true
   end

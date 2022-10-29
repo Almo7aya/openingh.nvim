@@ -25,17 +25,15 @@ end)
 
 describe("openingh should open ", function()
   it("repo on :OpenInGHRepo", function()
-    vim.fn.system("xdg-open() { export OpenInGHRepo=$0 }")
     vim.cmd("OpenInGHRepo")
     local status = vim.fn.system("echo $SHELL")
 
-    vim.cmd("echo $OpenInGHRepo")
+    vim.cmd("echo $OPENINGH_RESULT")
 
     assert.truthy(status)
   end)
 
   it("file on :OpenInGHFile", function()
-    vim.fn.system("xdg-open() { export OpenInGHFile=$1 }")
     vim.cmd("e ./README.md")
     vim.cmd("OpenInGHFile")
     local status = vim.fn.system("echo $OpenInGHFile")
