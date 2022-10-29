@@ -25,7 +25,7 @@ end)
 
 describe("openingh should open ", function()
   it("repo on :OpenInGHRepo", function()
-    vim.fn.system("xdg-open() { echo $0; echo $1; echo $2; export OpenInGHRepo=$0 }")
+    vim.fn.system("xdg-open() { export OpenInGHRepo=$0 }")
     vim.cmd("OpenInGHRepo")
     local status = vim.fn.system("echo $OpenInGHRepo")
 
