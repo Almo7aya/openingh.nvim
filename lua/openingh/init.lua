@@ -19,7 +19,7 @@ function M.setup()
     return
   end
 
-  M.repo_url = string.format("https://%s/%s/%s", gh.host, gh.user_or_org, gh.reponame)
+  M.repo_url = string.format("http://%s/%s/%s", gh.host, gh.user_or_org, gh.reponame)
 end
 
 function M.openFile()
