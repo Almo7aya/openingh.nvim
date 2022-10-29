@@ -36,6 +36,7 @@ describe("openingh should open ", function()
 
   it("file on :OpenInGHFile", function()
     vim.fn.system("alias xdg-open='export OpenInGHFile=1'")
+    vim.cmd("e ./README.md")
     vim.cmd("OpenInGHFile")
     local status = vim.fn.system("echo $OpenInGHFile")
 
