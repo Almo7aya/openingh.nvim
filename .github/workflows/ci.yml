@@ -35,11 +35,9 @@ jobs:
             curl -sL ${{ matrix.url }} | tar xzf - --strip-components=1 -C "${PWD}/_neovim"
           }
 
-      - name: Setup xdg-open mock
-        run: xdg-open() { export OPENINGH_RESULT=$1; }
-
       - name: Run tests
         run: |
+          xdg-open() { export OPENINGH_RESULT=$1; }
           export PATH="${PWD}/_neovim/bin:${PATH}"
           nvim --headless -u tests/minimal.vim  -c "q"
           make test
