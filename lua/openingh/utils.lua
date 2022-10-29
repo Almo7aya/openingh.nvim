@@ -78,6 +78,13 @@ end
 
 -- opens a url in the correct OS
 function M.open_url(url)
+  -- when running in test env store the url
+  if vim.g.test then
+    vim.g.OPENINGH_RESULT = url
+    return true
+  end
+
+
   -- order here matters
   -- wsl must come before win
   -- wsl must come before linux
