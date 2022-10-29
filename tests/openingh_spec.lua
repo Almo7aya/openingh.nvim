@@ -25,7 +25,7 @@ end)
 
 describe("openingh should set user commands", function()
   it("should open repo on :OpenInGHRepo", function()
-    local status = vim.fn.system("ls")
+    local status = vim.cmd("OpenInGHRepo")
     print(status)
 
     assert.truthy(status)
