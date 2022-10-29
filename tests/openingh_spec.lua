@@ -23,16 +23,22 @@ describe("openingh should set user commands", function()
   end)
 end)
 
-describe("openingh should set user commands", function()
-  it("should open repo on :OpenInGHRepo", function()
-    local status = vim.cmd("OpenInGHRepo")
+describe("openingh should open ", function()
+  it("repo on :OpenInGHRepo", function()
+    vim.fn.system("alias xdg-open='export OpenInGHRepo=1'")
+    vim.cmd("OpenInGHRepo")
+    local status = vim.fn.system("echo $OpenInGHRepo")
+
     print(status)
 
     assert.truthy(status)
   end)
 
-  it("should open file on :OpenInGHFile", function()
-    local status = vim.fn.system("pwd")
+  it("file on :OpenInGHFile", function()
+    vim.fn.system("alias xdg-open='export OpenInGHFile=1'")
+    vim.cmd("OpenInGHFile")
+    local status = vim.fn.system("echo $OpenInGHFile")
+
     print(status)
 
     assert.truthy(status)
