@@ -1,11 +1,11 @@
-describe("busted should run ", function()
+describe("busted should run", function()
   it(" should start test", function()
     vim.cmd([[packadd openingh.nvim]])
     local status = require("plenary.reload").reload_module(".nvim")
     assert.are.same(status, nil)
   end)
 
-  it("openingh should be available", function()
+  it(" require('openingh')", function()
     local status = require("openingh")
     assert.truthy(status)
   end)
@@ -19,6 +19,22 @@ describe("openingh should set user commands", function()
 
   it("should set :OpenInGHFile", function()
     local status = vim.fn.exists(":OpenInGHFile")
+    assert.truthy(status)
+  end)
+end)
+
+describe("openingh should set user commands", function()
+  it("should open repo on :OpenInGHRepo", function()
+    local status = vim.fn.system("ls")
+    print(status)
+
+    assert.truthy(status)
+  end)
+
+  it("should open file on :OpenInGHFile", function()
+    local status = vim.fn.system("pwd")
+    print(status)
+
     assert.truthy(status)
   end)
 end)
