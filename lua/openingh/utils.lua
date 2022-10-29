@@ -84,7 +84,6 @@ function M.open_url(url)
     return true
   end
 
-
   -- order here matters
   -- wsl must come before win
   -- wsl must come before linux

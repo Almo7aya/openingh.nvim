@@ -35,6 +35,8 @@ describe("openingh should open", function()
 
   it("file on :OpenInGHFile", function()
     vim.cmd("e ./README.md")
+    vim.cmd("OpenInGHFile")
+
     local status = vim.g.OPENINGH_RESULT
     print(status)
     assert.truthy(status)
