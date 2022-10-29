@@ -29,6 +29,9 @@ describe("openingh should open ", function()
     vim.cmd("OpenInGHRepo")
     local status = vim.fn.system("echo $SHELL")
 
+    print(os.getenv("MYVIMRC"))
+    print(os.getenv("OpenInGHRepo"))
+
     print(vim.inspect(status))
 
     assert.truthy(status)
