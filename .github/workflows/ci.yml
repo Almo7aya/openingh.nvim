@@ -13,14 +13,15 @@ jobs:
           - os: ubuntu-22.04
             url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux64.tar.gz
     steps:
-      - uses: actions/checkout@v2
-      - run: date +%F > todays-date
+      - uses: actions/checkout@v3
+      - id: todays-date
+        run: echo date="$(date +%F)" >> $GITHUB_OUTPUT
+        shell: bash
       - name: Restore cache for today's nightly.
         uses: actions/cache@v2
         with:
-          path: |
-            _neovim
-          key: ${{ runner.os }}-x64-${{ hashFiles('todays-date') }}
+          path: _neovim
+          key: ${{ runner.os }}-x64-${{ steps.todays-date.outputs.date }}
 
       - name: Prepare
         run: |
@@ -35,8 +36,9 @@ jobs:
             curl -sL ${{ matrix.url }} | tar xzf - --strip-components=1 -C "${PWD}/_neovim"
           }
 
+          echo "${PWD}/_neovim/bin" >> $GITHUB_PATH
+
       - name: Run tests
         run: |
-          export PATH="${PWD}/_neovim/bin:${PATH}"
-          nvim --headless -u tests/minimal.vim  -c "q"
+          nvim --headless -u tests/minimal.vim -c "q"
           make test
