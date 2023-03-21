@@ -38,7 +38,7 @@ function M.openFile(range_start, range_end)
     return
   end
 
-  local lines = nil
+  local lines
 
   if range_start and range_end then
     lines = "#L" .. range_start .. "-" .. "L" .. range_end
