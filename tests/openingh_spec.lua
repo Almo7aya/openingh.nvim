@@ -37,7 +37,7 @@ describe("openingh should open", function()
     vim.api.nvim_win_set_cursor(0, { 3, 0 })
     vim.cmd("OpenInGHFile")
     local status = vim.g.OPENINGH_RESULT
-    local expected = "/blob/main/README.md#L3"
+    local expected = "/README.md#L3"
     assert.equal(expected, status:sub(-#expected))
   end)
 
@@ -47,7 +47,7 @@ describe("openingh should open", function()
     vim.api.nvim_buf_set_mark(0, ">", 10, 0, {})
     vim.cmd("'<,'>OpenInGHFile")
     local status = vim.g.OPENINGH_RESULT
-    local expected = "/blob/main/README.md#L5-L10"
+    local expected = "/README.md#L5-L10"
     assert.equal(expected, status:sub(-#expected))
   end)
 end)
