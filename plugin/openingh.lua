@@ -16,5 +16,5 @@ end, {
 })
 
 vim.api.nvim_create_user_command("OpenInGHRepo", function()
-  openingh:openRepo()
+  openingh.openRepo()
 end, {})
