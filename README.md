@@ -58,7 +58,7 @@ vim.api.nvim_set_keymap("v", "<Leader>gf", "<esc><cmd>'<,'>OpenInGHFile <CR>", {
 ## TODO
 
   - [x] Support the current file cursor position
-  - [ ] Support visual mode to open a file in range selection 
+  - [x] Support visual mode to open a file in range selection 
   - [x] Support other version control websites 
 
 ## Contribution
