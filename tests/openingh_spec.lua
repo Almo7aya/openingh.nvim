@@ -50,4 +50,13 @@ describe("openingh should open", function()
     local expected = "/README.md#L5-L10"
     assert.equal(expected, status:sub(-#expected))
   end)
+
+  it("file range using a keymap", function()
+    vim.cmd("e ./README.md")
+    vim.api.nvim_set_keymap("n", "ghf", ":OpenInGHFile <cr>", {})
+    vim.cmd("normal ghf")
+    local status = vim.g.OPENINGH_RESULT
+    local expected = "/README.md#L1"
+    assert.equal(expected, status:sub(-#expected))
+  end)
 end)
