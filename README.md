@@ -48,11 +48,11 @@ You can call the commands directly or define mappings them:
 
 ```lua
 -- for repository page
-vim.api.nvim_set_keymap("n", "<Leader>gr", ":OpenInGHRepo <CR>", { expr = true, noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>gr", ":OpenInGHRepo <CR>", { silent = true, noremap = true })
 
 -- for current file page
-vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { expr = true, noremap = true })
-vim.api.nvim_set_keymap("v", "<Leader>gf", "<esc><cmd>'<,'>OpenInGHFile <CR>", { expr = true, noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("v", "<Leader>gf", ":OpenInGHFile <CR>", { silent = true, noremap = true })
 ```
 
 ## TODO
