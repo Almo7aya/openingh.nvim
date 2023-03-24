@@ -3,8 +3,8 @@ Opens the current file or project page in GitHub.
 
 ![Lua](https://img.shields.io/badge/Made%20with%20Lua-blueviolet.svg?style=for-the-badge&logo=lua)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/almo7aya/openingh.nvim?style=for-the-badge)
-[![lint with luacheck](https://img.shields.io/github/actions/workflow/status/almo7aya/openingh.nvim/lint%20with%20luacheck?style=for-the-badge)](https://github.com/Almo7aya/openingh.nvim/actions/workflows/lint.yml)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/almo7aya/openingh.nvim/Tests?label=TESTS&style=for-the-badge)
+[![lint with luacheck](https://img.shields.io/github/actions/workflow/status/almo7aya/openingh.nvim/lint.yml?style=for-the-badge)](https://github.com/Almo7aya/openingh.nvim/actions/workflows/lint.yml)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/almo7aya/openingh.nvim/ci.yml?label=TESTS&style=for-the-badge)
 
 
   - Features
