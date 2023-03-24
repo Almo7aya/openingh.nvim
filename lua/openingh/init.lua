@@ -22,7 +22,7 @@ function M.setup()
   M.repo_url = string.format("http://%s/%s/%s", gh.host, gh.user_or_org, gh.reponame)
 end
 
-function M.openFile()
+function M.openFile(range_start, range_end)
   -- make sure to update the current directory
   M.setup()
   if M.is_no_git_origin then
@@ -38,10 +38,17 @@ function M.openFile()
     return
   end
 
-  local line_number = utils.get_line_number_from_buf()
+  local lines
+
+  if range_start and range_end then
+    lines = "#L" .. range_start .. "-" .. "L" .. range_end
+  else
+    lines = "#L" .. utils.get_line_number_from_buf()
+  end
+
   local current_branch_name_or_commit_hash = utils.get_current_branch_or_commit()
 
-  local file_page_url = M.repo_url .. "/blob/" .. current_branch_name_or_commit_hash .. file_path .. "#L" .. line_number
+  local file_page_url = M.repo_url .. "/blob/" .. current_branch_name_or_commit_hash .. file_path .. lines
 
   local result = utils.open_url(file_page_url)
 

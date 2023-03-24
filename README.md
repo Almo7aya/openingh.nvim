@@ -40,7 +40,7 @@ end)
   - Opens the project's git repository page in GitHub.
 
 - `:OpenInGHFile`
-  - Opens the current file page in GitHub.
+  - Opens the current file page in GitHub.  This command supports ranges.
 
 ## Usage
 
@@ -48,16 +48,17 @@ You can call the commands directly or define mappings them:
 
 ```lua
 -- for repository page
-vim.api.nvim_set_keymap("n", "<Leader>gr", ":OpenInGHRepo <CR>", { expr = true, noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>gr", ":OpenInGHRepo <CR>", { silent = true, noremap = true })
 
 -- for current file page
-vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { expr = true, noremap = true })
+vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("v", "<Leader>gf", ":OpenInGHFile <CR>", { silent = true, noremap = true })
 ```
 
 ## TODO
 
   - [x] Support the current file cursor position
-  - [ ] Support visual mode to open a file in range selection 
+  - [x] Support visual mode to open a file in range selection 
   - [x] Support other version control websites 
 
 ## Contribution
