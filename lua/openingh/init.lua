@@ -56,7 +56,7 @@ function M.open_file(
   end
 end
 
-function M.openRepo()
+function M.open_repo()
   -- make sure to update the current directory
   M.setup()
   if M.is_no_git_origin then
