@@ -38,7 +38,7 @@ function M.parse_gh_remote(url)
 end
 
 -- get the remote default branch
-function M.get_defualt_branch()
+function M.get_default_branch()
   -- will return origin/[branch_name]
   local branch_with_origin = vim.fn.system("git rev-parse --abbrev-ref origin/HEAD")
   local branch_name = M.split(branch_with_origin, "/")[2]
@@ -72,8 +72,8 @@ end
 
 -- get the line number in the buffer
 function M.get_line_number_from_buf()
-  local lineNum = vim.api.nvim_win_get_cursor(0)[1]
-  return lineNum
+  local line_num = vim.api.nvim_win_get_cursor(0)[1]
+  return line_num
 end
 
 -- opens a url in the correct OS

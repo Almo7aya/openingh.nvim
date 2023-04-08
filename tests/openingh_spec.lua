@@ -37,7 +37,17 @@ describe("openingh should open", function()
     vim.api.nvim_win_set_cursor(0, { 3, 0 })
     vim.cmd("OpenInGHFile")
     local status = vim.g.OPENINGH_RESULT
-    local expected = "/README.md#L3"
+    local expected = "/README.md"
+    assert.equal(expected, status:sub(-#expected))
+  end)
+
+  it("file range on :'<,'>OpenInGHFile", function()
+    vim.cmd("e ./README.md")
+    vim.api.nvim_buf_set_mark(0, "<", 5, 0, {})
+    vim.api.nvim_buf_set_mark(0, ">", 5, 0, {})
+    vim.cmd("'<,'>OpenInGHFile")
+    local status = vim.g.OPENINGH_RESULT
+    local expected = "/README.md#L5-L5"
     assert.equal(expected, status:sub(-#expected))
   end)
 
@@ -57,7 +67,7 @@ describe("openingh should open", function()
     vim.api.nvim_win_set_cursor(0, { 2, 0 })
     vim.cmd("normal ghf")
     local status = vim.g.OPENINGH_RESULT
-    local expected = "/README.md#L2"
+    local expected = "/README.md"
     assert.equal(expected, status:sub(-#expected))
   end)
 end)
