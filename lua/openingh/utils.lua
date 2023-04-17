@@ -1,5 +1,11 @@
 local M = {}
 
+-- Notify the user that something went wrong
+function M.notify(message, log_level)
+  print(message)
+  vim.notify({ message }, log_level, { title = "openingh.nvim" })
+end
+
 -- the missing split lua method to split a string
 function M.split(string, char)
   local array = {}
@@ -46,17 +52,42 @@ function M.get_default_branch()
   return M.trim(branch_name)
 end
 
--- get the active local branch or commit when HEAD is detached
-function M.get_current_branch_or_commit()
-  local current_branch_name = M.trim(vim.fn.system("git rev-parse --abbrev-ref HEAD"))
+-- Checks if the supplied branch is available on the remote
+function M.is_branch_upstreamed(branch)
+  local output = M.trim(vim.fn.system("git ls-remote --exit-code --heads origin " .. branch))
+  return output ~= ""
+end
 
-  -- HEAD is detached
-  if current_branch_name ~= "HEAD" then
-    return current_branch_name
+-- Get the current working branch
+local function get_current_branch()
+  return M.trim(vim.fn.system("git rev-parse --abbrev-ref HEAD"))
+end
+
+-- Get the commit hash of the most recent commit
+local function get_current_commit_hash()
+  return M.trim(vim.fn.system("git rev-parse HEAD"))
+end
+
+-- Checks if the supplied commit is available on the remote
+function M.is_commit_upstreamed(commit_sha)
+  local output = M.trim(vim.fn.system('git log --format="%H" --remotes'))
+  return output:match(commit_sha) ~= nil
+end
+
+-- Returns the current branch or commit if they are available on remote
+-- otherwise this will return the default branch of the repo
+function M.get_current_branch_or_commit()
+  local current_branch = get_current_branch()
+  if current_branch ~= "HEAD" and M.is_branch_upstreamed(current_branch) then
+    return current_branch
   end
 
-  local current_commit_hash = vim.fn.system("git rev-parse HEAD")
-  return M.trim(current_commit_hash)
+  local commit_hash = get_current_commit_hash()
+  if current_branch == "HEAD" and M.is_commit_upstreamed(commit_hash) then
+    return commit_hash
+  end
+
+  return M.get_default_branch()
 end
 
 -- get the active buf relative file path form the .git
