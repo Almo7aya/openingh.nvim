@@ -77,17 +77,21 @@ end
 -- Returns the current branch or commit if they are available on remote
 -- otherwise this will return the default branch of the repo
 function M.get_current_branch_or_commit()
-  local current_branch = get_current_branch()
-  if current_branch ~= "HEAD" and M.is_branch_upstreamed(current_branch) then
-    return current_branch
+  local core = function()
+    local current_branch = get_current_branch()
+    if current_branch ~= "HEAD" and M.is_branch_upstreamed(current_branch) then
+      return current_branch
+    end
+
+    local commit_hash = get_current_commit_hash()
+    if current_branch == "HEAD" and M.is_commit_upstreamed(commit_hash) then
+      return commit_hash
+    end
+
+    return M.get_default_branch()
   end
 
-  local commit_hash = get_current_commit_hash()
-  if current_branch == "HEAD" and M.is_commit_upstreamed(commit_hash) then
-    return commit_hash
-  end
-
-  return M.get_default_branch()
+  return string.gsub(core(), "#", "%%23")
 end
 
 -- get the active buf relative file path form the .git
