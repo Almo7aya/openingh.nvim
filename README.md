@@ -40,7 +40,10 @@ end)
   - Opens the project's git repository page in GitHub.
 
 - `:OpenInGHFile`
-  - Opens the current file page in GitHub.  This command supports ranges.
+  - Opens the current file page in GitHub. This command supports ranges.
+
+- `:OpenInGHFileLines`
+  - Opens the current file page in GitHub. This command supports ranges.
 
 ## Usage
 
@@ -52,7 +55,7 @@ vim.api.nvim_set_keymap("n", "<Leader>gr", ":OpenInGHRepo <CR>", { silent = true
 
 -- for current file page
 vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { silent = true, noremap = true })
-vim.api.nvim_set_keymap("v", "<Leader>gf", ":OpenInGHFile <CR>", { silent = true, noremap = true })
+vim.api.nvim_set_keymap("v", "<Leader>gf", ":OpenInGHFileLines <CR>", { silent = true, noremap = true })
 ```
 
 ## TODO

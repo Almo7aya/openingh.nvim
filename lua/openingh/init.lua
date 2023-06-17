@@ -45,6 +45,10 @@ function M.open_file(
 
   local file_page_url = M.repo_url .. "/blob/" .. utils.get_current_branch_or_commit() .. file_path
 
+  if range_start and not range_end then
+    file_page_url = file_page_url .. "#L" .. range_start
+  end
+
   if range_start and range_end then
     file_page_url = file_page_url .. "#L" .. range_start .. "-L" .. range_end
   end
