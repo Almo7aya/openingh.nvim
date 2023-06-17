@@ -96,6 +96,23 @@ function M.get_current_branch_or_commit()
   return M.encode_uri_component(M.get_default_branch())
 end
 
+-- Returns the current commit or branch if they are available on remote
+-- otherwise this will return the default branch of the repo
+-- (This function prioritizes commit than branch)
+function M.get_current_commit_or_branch()
+  local commit_hash = get_current_commit_hash()
+  if M.is_commit_upstreamed(commit_hash) then
+    return commit_hash
+  end
+
+  local current_branch = get_current_branch()
+  if current_branch ~= "HEAD" and M.is_branch_upstreamed(current_branch) then
+    return M.encode_uri_component(current_branch)
+  end
+
+  return M.encode_uri_component(M.get_default_branch())
+end
+
 -- get the active buf relative file path form the .git
 function M.get_current_relative_file_path()
   -- we only want the active buffer name
