@@ -22,10 +22,12 @@ function M.setup()
   M.repo_url = string.format("http://%s/%s/%s", gh.host, gh.user_or_org, gh.reponame)
 end
 
-local get_current_branch_or_commit_with_priority = function(priority)
-  if priority == 'branch-priority' then
+M.priority = { BRANCH = 'branch-priority', COMMIT = 'commit-priority', }
+
+local function get_current_branch_or_commit_with_priority(priority)
+  if priority == M.priority.BRANCH then
     return utils.get_current_branch_or_commit()
-  elseif priority == 'commit-priority' then
+  elseif priority == M.priority.COMMIT then
     return utils.get_current_commit_or_branch()
   else
     return utils.get_current_branch_or_commit()

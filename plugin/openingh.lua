@@ -5,8 +5,8 @@ vim.g.openingh = true
 
 local openingh = require("openingh")
 
-local complete_list = { 'branch-priority', 'commit-priority', }
-local complete_func = function(arg_lead, _, _)
+local complete_list = { openingh.priority.BRANCH, openingh.priority.COMMIT, }
+local function complete_func(arg_lead, _, _)
   return vim.tbl_filter(function(item)
     return vim.startswith(item, arg_lead)
   end, complete_list)
@@ -36,7 +36,7 @@ end, {
   complete = complete_func,
 })
 
-vim.api.nvim_create_user_command("OpenInGHRepo", function()
+vim.api.nvim_create_user_command("OpenInGHRepo", function(opts)
   openingh.open_repo(opts.args)
 end, {
   nargs = '?',
