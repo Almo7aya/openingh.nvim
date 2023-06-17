@@ -37,7 +37,6 @@ end, {
 })
 
 vim.api.nvim_create_user_command("OpenInGHRepo", function()
-  print(opts)
   openingh.open_repo(opts.args)
 end, {
   nargs = '?',

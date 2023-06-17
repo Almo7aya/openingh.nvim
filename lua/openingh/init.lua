@@ -23,9 +23,9 @@ function M.setup()
 end
 
 local get_current_branch_or_commit_with_priority = function(priority)
-  if (not priority) or (priority and priority == 'branch') then
+  if priority == 'branch-priority' then
     return utils.get_current_branch_or_commit()
-  elseif (priority and priority == 'branch') then
+  elseif priority == 'commit-priority' then
     return utils.get_current_commit_or_branch()
   else
     return utils.get_current_branch_or_commit()
