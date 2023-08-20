@@ -60,7 +60,13 @@ end
 
 -- Checks if the supplied branch is available on the remote
 function M.is_branch_upstreamed(branch)
-  local output = M.trim(vim.fn.system("git ls-remote --exit-code --heads origin " .. branch))
+  local output = M.trim(vim.fn.system("git branch -r --list origin/" .. branch))
+  if output:find(branch, 1, true) then
+    return true
+  end
+
+  -- ls-remote is more expensive so only use it as a fallback
+  output = M.trim(vim.fn.system("git ls-remote --exit-code --heads origin " .. branch))
   return output ~= ""
 end
 
