@@ -13,11 +13,15 @@ local function complete_func(arg_lead, _, _)
 end
 
 vim.api.nvim_create_user_command("OpenInGHFile", function(opts)
+  local url
+
   if opts.range == 0 then -- Nothing was selected
-    openingh.open_file(opts.args)
-  else -- Current line or block was selected
-    openingh.open_file(opts.args, opts.line1, opts.line2)
+    url = openingh.get_file_url(opts.args)
+  else                    -- Current line or block was selected
+    url = openingh.get_file_url(opts.args, opts.line1, opts.line2)
   end
+
+  openingh.open_url(url)
 end, {
   range = true,
   nargs = '?',
@@ -25,11 +29,15 @@ end, {
 })
 
 vim.api.nvim_create_user_command("OpenInGHFileLines", function(opts)
+  local url
+
   if opts.range == 0 then -- Nothing was selected
-    openingh.open_file(opts.args, opts.line1)
-  else -- Current line or block was selected
-    openingh.open_file(opts.args, opts.line1, opts.line2)
+    url = openingh.get_file_url(opts.args, opts.line1)
+  else                    -- Current line or block was selected
+    url = openingh.get_file_url(opts.args, opts.line1, opts.line2)
   end
+
+  openingh.open_url(url)
 end, {
   range = true,
   nargs = '?',
@@ -37,7 +45,7 @@ end, {
 })
 
 vim.api.nvim_create_user_command("OpenInGHRepo", function(opts)
-  openingh.open_repo(opts.args)
+  openingh.open_url(openingh.get_repo_url(opts.args))
 end, {
   nargs = '?',
   complete = complete_func,
