@@ -45,6 +45,13 @@ end)
 - `:OpenInGHFileLines`
   - Opens the current file page in GitHub. This command supports ranges.
 
+
+## Registers
+
+All of the commands above optionally take a register, e.g. `:OpenInGHFileLines+`.
+In this case, the URL will not be opened in the browser, but put into the register given.
+This is especially useful if you're running neovim on a remote machine, but want to open the URL locally.
+
 ## Usage
 
 You can call the commands directly or define mappings them:

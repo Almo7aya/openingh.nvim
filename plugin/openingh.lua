@@ -25,7 +25,7 @@ vim.api.nvim_create_user_command("OpenInGHFile", function(opts)
     openingh.open_url(url)
   else
     vim.fn.setreg(opts.reg, url)
-    print("URL yanked")
+    print("URL put into register " .. opts.reg)
   end
 end, {
   register = true,
@@ -47,7 +47,7 @@ vim.api.nvim_create_user_command("OpenInGHFileLines", function(opts)
     openingh.open_url(url)
   else
     vim.fn.setreg(opts.reg, url)
-    print("URL yanked")
+    print("URL put into register " .. opts.reg)
   end
 end, {
   register = true,
@@ -63,7 +63,7 @@ vim.api.nvim_create_user_command("OpenInGHRepo", function(opts)
     openingh.open_url(url)
   else
     vim.fn.setreg(opts.reg, url)
-    print("URL yanked")
+    print("URL put into register " .. opts.reg)
   end
 end, {
   register = true,
