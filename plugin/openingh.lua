@@ -13,32 +13,60 @@ local function complete_func(arg_lead, _, _)
 end
 
 vim.api.nvim_create_user_command("OpenInGHFile", function(opts)
+  local url
+
   if opts.range == 0 then -- Nothing was selected
-    openingh.open_file(opts.args)
-  else -- Current line or block was selected
-    openingh.open_file(opts.args, opts.line1, opts.line2)
+    url = openingh.get_file_url(opts.args)
+  else                    -- Current line or block was selected
+    url = openingh.get_file_url(opts.args, opts.line1, opts.line2)
+  end
+
+  if opts.reg == "" then
+    openingh.open_url(url)
+  else
+    vim.fn.setreg(opts.reg, url)
+    print("URL put into register " .. opts.reg)
   end
 end, {
+  register = true,
   range = true,
   nargs = '?',
   complete = complete_func,
 })
 
 vim.api.nvim_create_user_command("OpenInGHFileLines", function(opts)
+  local url
+
   if opts.range == 0 then -- Nothing was selected
-    openingh.open_file(opts.args, opts.line1)
-  else -- Current line or block was selected
-    openingh.open_file(opts.args, opts.line1, opts.line2)
+    url = openingh.get_file_url(opts.args, opts.line1)
+  else                    -- Current line or block was selected
+    url = openingh.get_file_url(opts.args, opts.line1, opts.line2)
+  end
+
+  if opts.reg == "" then
+    openingh.open_url(url)
+  else
+    vim.fn.setreg(opts.reg, url)
+    print("URL put into register " .. opts.reg)
   end
 end, {
+  register = true,
   range = true,
   nargs = '?',
   complete = complete_func,
 })
 
 vim.api.nvim_create_user_command("OpenInGHRepo", function(opts)
-  openingh.open_repo(opts.args)
+  local url = openingh.get_repo_url(opts.args)
+
+  if opts.reg == "" then
+    openingh.open_url(url)
+  else
+    vim.fn.setreg(opts.reg, url)
+    print("URL put into register " .. opts.reg)
+  end
 end, {
+  register = true,
   nargs = '?',
   complete = complete_func,
 })
