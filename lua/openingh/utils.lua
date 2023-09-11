@@ -37,8 +37,9 @@ function M.parse_gh_remote(url)
   -- ssh url can be of type:
   -- git@some.github.com:user_or_org/reponame.git
   -- ssh://git@some.github.com/user_or_org/reponame.git
+  -- ssh://org-12345@some.github.com/org/reponame.git
   -- .* is used for ssh:// since lua matching doesn't support optional groups, only chars
-  local ssh = { string.find(url, ".*git@(.*)[:/]([^/]*)/([^%s/]*)") }
+  local ssh = { string.find(url, ".*@(.*)[:/]([^/]*)/([^%s/]*)") }
 
   local matches = http[1] == nil and ssh or http
   if matches[1] == nil then
