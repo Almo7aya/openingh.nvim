@@ -22,7 +22,7 @@ function M.setup()
   M.repo_url = string.format("http://%s/%s/%s", gh.host, gh.user_or_org, gh.reponame)
 end
 
-M.priority = { BRANCH = 'branch-priority', COMMIT = 'commit-priority', }
+M.priority = { BRANCH = 1, COMMIT = 2, }
 
 local function get_current_branch_or_commit_with_priority(priority)
   if priority == M.priority.BRANCH then
