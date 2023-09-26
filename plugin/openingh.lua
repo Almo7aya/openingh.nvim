@@ -5,20 +5,22 @@ vim.g.openingh = true
 
 local openingh = require("openingh")
 
-local complete_list = { openingh.priority.BRANCH, openingh.priority.COMMIT, }
-local function complete_func(arg_lead, _, _)
-  return vim.tbl_filter(function(item)
-    return vim.startswith(item, arg_lead)
-  end, complete_list)
+local function judge_priority(bang)
+  -- When the command executed with bang `!`, prioritizes commit rather than branch.
+  if bang then
+    return openingh.priority.COMMIT
+  else
+    return openingh.priority.BRANCH
+  end
 end
 
 vim.api.nvim_create_user_command("OpenInGHFile", function(opts)
   local url
 
   if opts.range == 0 then -- Nothing was selected
-    url = openingh.get_file_url(opts.args)
+    url = openingh.get_file_url(judge_priority(opts.bang))
   else                    -- Current line or block was selected
-    url = openingh.get_file_url(opts.args, opts.line1, opts.line2)
+    url = openingh.get_file_url(judge_priority(opts.bang), opts.line1, opts.line2)
   end
 
   if opts.reg == "" then
@@ -30,17 +32,16 @@ vim.api.nvim_create_user_command("OpenInGHFile", function(opts)
 end, {
   register = true,
   range = true,
-  nargs = '?',
-  complete = complete_func,
+  bang = true,
 })
 
 vim.api.nvim_create_user_command("OpenInGHFileLines", function(opts)
   local url
 
   if opts.range == 0 then -- Nothing was selected
-    url = openingh.get_file_url(opts.args, opts.line1)
+    url = openingh.get_file_url(judge_priority(opts.bang), opts.line1)
   else                    -- Current line or block was selected
-    url = openingh.get_file_url(opts.args, opts.line1, opts.line2)
+    url = openingh.get_file_url(judge_priority(opts.bang), opts.line1, opts.line2)
   end
 
   if opts.reg == "" then
@@ -52,12 +53,11 @@ vim.api.nvim_create_user_command("OpenInGHFileLines", function(opts)
 end, {
   register = true,
   range = true,
-  nargs = '?',
-  complete = complete_func,
+  bang = true,
 })
 
 vim.api.nvim_create_user_command("OpenInGHRepo", function(opts)
-  local url = openingh.get_repo_url(opts.args)
+  local url = openingh.get_repo_url(judge_priority(opts.bang))
 
   if opts.reg == "" then
     openingh.open_url(url)
@@ -67,6 +67,5 @@ vim.api.nvim_create_user_command("OpenInGHRepo", function(opts)
   end
 end, {
   register = true,
-  nargs = '?',
-  complete = complete_func,
+  bang = true,
 })

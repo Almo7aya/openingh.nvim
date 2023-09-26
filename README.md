@@ -52,6 +52,16 @@ All of the commands above optionally take a register, e.g. `:OpenInGHFileLines+`
 In this case, the URL will not be opened in the browser, but put into the register given.
 This is especially useful if you're running neovim on a remote machine, but want to open the URL locally.
 
+## Priority
+
+At first, this plugin try to identify the page url based on the current branch you are working in,
+and if it fails then switches its base to commit.
+
+This behavior can be inverted via bang `!`, e.g. `:OpenInGHFile!`.
+
+Since commit based url tends to have long durablity compared to branch based one, it can be useful in some situation.
+It won't be affected by subsequent commits, branch deletion after merge, and so on.
+
 ## Usage
 
 You can call the commands directly or define mappings them:
