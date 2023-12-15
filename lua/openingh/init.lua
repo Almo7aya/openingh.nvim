@@ -3,7 +3,7 @@ local M = {}
 
 function M.setup()
   -- get the current working directory and set the url
-  local current_buffer = vim.fn.expand("%:p:h")
+  local current_buffer = vim.fn.expand("%:p:h"):gsub("%[", "\\["):gsub("%]", "\\]")
   local repo_url = vim.fn.system("git -C " .. current_buffer .. " config --get remote.origin.url")
 
   if repo_url:len() == 0 then
@@ -55,7 +55,6 @@ function M.get_file_url(
     utils.notify("There is no active file to open!", vim.log.levels.ERROR)
     return
   end
-
 
   local file_page_url = M.repo_url .. "/blob/" .. get_current_branch_or_commit_with_priority(priority) .. file_path
 
