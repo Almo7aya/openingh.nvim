@@ -56,6 +56,7 @@ function M.get_file_url(
     return
   end
 
+
   local file_page_url = M.repo_url .. "/blob/" .. get_current_branch_or_commit_with_priority(priority) .. file_path
 
   if range_start and not range_end then
