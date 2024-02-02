@@ -22,7 +22,7 @@ function M.setup()
   M.repo_url = string.format("http://%s/%s/%s", gh.host, gh.user_or_org, gh.reponame)
 end
 
-M.priority = { BRANCH = 1, COMMIT = 2, }
+M.priority = { BRANCH = 1, COMMIT = 2 }
 
 local function get_current_branch_or_commit_with_priority(priority)
   if priority == M.priority.BRANCH then
@@ -36,6 +36,8 @@ end
 
 function M.get_file_url(
   priority,
+  --[[optional]]
+  branch,
   --[[optional]]
   range_start,
   --[[optional]]
@@ -56,8 +58,12 @@ function M.get_file_url(
     return
   end
 
+  local rev = get_current_branch_or_commit_with_priority(priority)
+  if branch ~= nil then
+    rev = branch
+  end
 
-  local file_page_url = M.repo_url .. "/blob/" .. get_current_branch_or_commit_with_priority(priority) .. file_path
+  local file_page_url = M.repo_url .. "/blob/" .. rev .. file_path
 
   if range_start and not range_end then
     file_page_url = file_page_url .. "#L" .. range_start

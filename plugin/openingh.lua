@@ -17,10 +17,11 @@ end
 vim.api.nvim_create_user_command("OpenInGHFile", function(opts)
   local url
 
+  local branch = opts.fargs[1]
   if opts.range == 0 then -- Nothing was selected
-    url = openingh.get_file_url(judge_priority(opts.bang))
-  else                    -- Current line or block was selected
-    url = openingh.get_file_url(judge_priority(opts.bang), opts.line1, opts.line2)
+    url = openingh.get_file_url(judge_priority(opts.bang), branch)
+  else -- Current line or block was selected
+    url = openingh.get_file_url(judge_priority(opts.bang), branch, opts.line1, opts.line2)
   end
 
   if opts.reg == "" then
@@ -30,18 +31,20 @@ vim.api.nvim_create_user_command("OpenInGHFile", function(opts)
     print("URL put into register " .. opts.reg)
   end
 end, {
-  register = true,
+  register = vim.g.openingh_copy_to_register,
   range = true,
   bang = true,
+  nargs = "*",
 })
 
 vim.api.nvim_create_user_command("OpenInGHFileLines", function(opts)
   local url
 
+  local branch = opts.fargs[1]
   if opts.range == 0 then -- Nothing was selected
-    url = openingh.get_file_url(judge_priority(opts.bang), opts.line1)
-  else                    -- Current line or block was selected
-    url = openingh.get_file_url(judge_priority(opts.bang), opts.line1, opts.line2)
+    url = openingh.get_file_url(judge_priority(opts.bang), branch, opts.line1)
+  else -- Current line or block was selected
+    url = openingh.get_file_url(judge_priority(opts.bang), branch, opts.line1, opts.line2)
   end
 
   if opts.reg == "" then
@@ -51,9 +54,10 @@ vim.api.nvim_create_user_command("OpenInGHFileLines", function(opts)
     print("URL put into register " .. opts.reg)
   end
 end, {
-  register = true,
+  register = vim.g.openingh_copy_to_register,
   range = true,
   bang = true,
+  nargs = "*",
 })
 
 vim.api.nvim_create_user_command("OpenInGHRepo", function(opts)
@@ -66,6 +70,6 @@ vim.api.nvim_create_user_command("OpenInGHRepo", function(opts)
     print("URL put into register " .. opts.reg)
   end
 end, {
-  register = true,
+  register = vim.g.openingh_copy_to_register,
   bang = true,
 })

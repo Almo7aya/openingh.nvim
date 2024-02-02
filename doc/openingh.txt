@@ -33,8 +33,9 @@ CONTENTS                                                    *openingh*
  :OpenInGHRepo 
    - Opens the project's git repository page in GitHub.
 
- :OpenInGHFile
-   - Opens the current file page in GitHub.
+ :OpenInGHFile [git-rev]
+   - Opens the current file page in GitHub. Providing an optional [git-rev] will override the
+     current branch/rev.
 
 ==============================================================================
  4. USAGE                                       *openingh-usage*
@@ -46,6 +47,10 @@ CONTENTS                                                    *openingh*
 
   -- for current file page
   vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { expr = true, noremap = true })
+
+ To copy the URL into a register set 
+   `vim.g.openingh_copy_to_register = true`
+ `OpenInGHFile a` should place the URL into register `a`
 
 ==============================================================================
  5. LICENSE                                    *openingh-license*
