@@ -25,7 +25,9 @@ end
 -- url encode
 -- see: https://datatracker.ietf.org/doc/html/rfc3986#section-2.3
 function M.encode_uri_component(string)
-  return (string:gsub("[^%w_~%.%-]", function (c) return string.format("%%%02X", string.byte(c)) end))
+  return (string:gsub("[^%w_~%.%-]", function(c)
+    return string.format("%%%02X", string.byte(c))
+  end))
 end
 
 -- returns a table with the host, user/org and the reponame given a github remote url
@@ -126,13 +128,17 @@ function M.get_current_relative_file_path()
   local absolute_file_path = vim.api.nvim_buf_get_name(0)
   local git_path = vim.fn.system("git rev-parse --show-toplevel")
 
+  if vim.fn.has("win32") == 1 then
+    absolute_file_path = string.gsub(absolute_file_path, "\\", "/")
+  end
+
   local relative_file_path_components = M.split(string.sub(absolute_file_path, git_path:len() + 1), "/")
   local encoded_components = {}
   for i, path_component in pairs(relative_file_path_components) do
     table.insert(encoded_components, i, M.encode_uri_component(path_component))
   end
 
-  return "/" .. table.concat(encoded_components, '/')
+  return "/" .. table.concat(encoded_components, "/")
 end
 
 -- get the line number in the buffer
