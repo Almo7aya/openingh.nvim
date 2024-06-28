@@ -52,6 +52,9 @@ CONTENTS                                                    *openingh*
    `vim.g.openingh_copy_to_register = true`
  `OpenInGHFile a` should place the URL into register `a`
 
+ In case your remote repository name is different from `origin`, please set a pushDefault so that openingh can get the remote name from it.
+ `git config remote.pushDefault <your-remote-name>  # e.g. git config remote.pushDefault upstream`
+
 ==============================================================================
  5. LICENSE                                    *openingh-license*
 
