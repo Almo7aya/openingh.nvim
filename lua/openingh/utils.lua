@@ -33,17 +33,14 @@ end
 -- returns a table with the host, user/org and the reponame given a github remote url
 -- nil is returned when the url cannot be parsed
 function M.parse_gh_remote(url)
-  -- 3 capture groups for host, org/user and repo. whitespace is trimmed
-  -- when cloning with http://, gh redirects to https://, but remote stays http
-  local http = { string.find(url, "https?://([^/]*)/([^/]*)/([^%s/]*)") }
-  -- ssh url can be of type:
+  -- url can be of type:
+  -- http://github.com/user_or_org/reponame
+  -- https://github.com/user_or_org/reponame
+  -- https://gitlab.com/user_or_org/group/reponame
   -- git@some.github.com:user_or_org/reponame.git
   -- ssh://git@some.github.com/user_or_org/reponame.git
   -- ssh://org-12345@some.github.com/org/reponame.git
-  -- .* is used for ssh:// since lua matching doesn't support optional groups, only chars
-  local ssh = { string.find(url, ".*@(.*)[:/]([^/]*)/([^%s/]*)") }
-
-  local matches = http[1] == nil and ssh or http
+  local matches = { string.find(url, "^.+[@/]([%w%.]+%.%w+)[/:](.+)/(%S+)") }
   if matches[1] == nil then
     return nil
   end
