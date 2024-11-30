@@ -1,5 +1,5 @@
-set rtp +=.
-set rtp +=../plenary.nvim/
+set rtp+=/tmp/openingh.nvim/plenary.nvim/
+set packpath+=/tmp/openingh.nvim/
 
 
 runtime! plugin/plenary.vim
