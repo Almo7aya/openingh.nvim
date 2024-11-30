@@ -4,7 +4,8 @@ local M = {}
 function M.setup()
   -- get the current working directory and set the url
   local current_buffer = vim.fn.expand("%:p:h"):gsub("%[", "\\["):gsub("%]", "\\]")
-  local repo_url = vim.fn.system("git -C " .. current_buffer .. " config --get remote.origin.url")
+  local remote = utils.get_default_remote()
+  local repo_url = vim.fn.system("git -C " .. current_buffer .. " config --get remote." .. remote .. ".url")
 
   if repo_url:len() == 0 then
     M.is_no_git_origin = true

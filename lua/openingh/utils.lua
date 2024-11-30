@@ -52,10 +52,21 @@ function M.parse_gh_remote(url)
   return { host = host, user_or_org = user_or_org, reponame = string.gsub(reponame, ".git", "") }
 end
 
+-- get the default push remote
+function M.get_default_remote()
+  -- will return origin by default
+  local remote = vim.fn.system("git config remote.pushDefault")
+  if remote == "" then
+    return "origin"
+  end
+  return M.trim(remote)
+end
+
 -- get the remote default branch
 function M.get_default_branch()
   -- will return origin/[branch_name]
-  local branch_with_origin = vim.fn.system("git rev-parse --abbrev-ref origin/HEAD")
+  local remote = M.get_default_remote()
+  local branch_with_origin = vim.fn.system("git rev-parse --abbrev-ref " .. remote .. "/HEAD")
   local branch_name = M.split(branch_with_origin, "/")[2]
 
   return M.trim(branch_name)
@@ -63,13 +74,14 @@ end
 
 -- Checks if the supplied branch is available on the remote
 function M.is_branch_upstreamed(branch)
-  local output = M.trim(vim.fn.system("git branch -r --list origin/" .. branch))
+  local remote = M.get_default_remote()
+  local output = M.trim(vim.fn.system("git branch -r --list " .. remote .. "/" .. branch))
   if output:find(branch, 1, true) then
     return true
   end
 
   -- ls-remote is more expensive so only use it as a fallback
-  output = M.trim(vim.fn.system("git ls-remote --exit-code --heads origin " .. branch))
+  output = M.trim(vim.fn.system("git ls-remote --exit-code --heads " .. remote .. " " .. branch))
   return output ~= ""
 end
 
