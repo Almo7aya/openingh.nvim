@@ -75,6 +75,12 @@ vim.api.nvim_set_keymap("n", "<Leader>gf", ":OpenInGHFile <CR>", { silent = true
 vim.api.nvim_set_keymap("v", "<Leader>gf", ":OpenInGHFileLines <CR>", { silent = true, noremap = true })
 ```
 
+In case your remote repository name is different from `origin`, please set a pushDefault so that openingh can get the remote name from it.
+
+```sh
+git config remote.pushDefault <your-remote-name>  # e.g. git config remote.pushDefault upstream
+```
+
 ## TODO
 
   - [x] Support the current file cursor position
