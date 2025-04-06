@@ -49,3 +49,39 @@ describe("encode_uri_component", function()
     assert.is.Equal("%E3%81%BB%E3%81%92", output)
   end)
 end)
+
+
+describe("parse_gh_remote", function ()
+    it("test http format", function ()
+        local url = "http://github.com/user/digital_repo.git"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test https format", function ()
+        local url = "https://github.com/user/digital_repo"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test ssh format", function ()
+        local url = "ssh://git@some.gitlab.com/user/digital_repo.git"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("some.gitlab.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test git@ format", function ()
+        local url = "git@github.com/user/digital_repo.git"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+end)
+
