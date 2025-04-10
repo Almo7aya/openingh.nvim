@@ -46,7 +46,7 @@ function M.parse_gh_remote(url)
   end
 
   local _, _, host, user_or_org, reponame = unpack(matches)
-  return { host = host, user_or_org = user_or_org, reponame = string.gsub(reponame, ".git", "") }
+  return { host = host, user_or_org = user_or_org, reponame = string.gsub(reponame, "%.git$", "") }
 end
 
 -- get the default push remote
