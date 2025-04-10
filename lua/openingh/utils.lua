@@ -94,7 +94,7 @@ end
 
 -- Checks if the supplied commit is available on the remote
 function M.is_commit_upstreamed(commit_sha)
-  local output = M.trim(vim.fn.system('git log --format="%H" --remotes'))
+  local output = M.trim(vim.fn.system('git log --format="%H"'))
   return output:match(commit_sha) ~= nil
 end
 
