@@ -43,6 +43,23 @@ function M.parse_gh_remote(url)
   -- ssh://org-12345@some.github.com/org/reponame.git
 
   -- pattern reference: https://www.lua.org/manual/5.4/manual.html#6.4.1
+  --
+  -- notes:
+  -- ^     matches beginning of the string
+  -- [^@]+ matches one or more characters that are not "@"
+  -- [^:]+ matches one or more characters that are not ":"
+  -- (.+)  matches any character one or more times
+  -- %S+   matches one or more non-whitespace characters
+  --
+  -- same patterns with spacing for readability:
+  --   git   @ github.com : user_or_org / reponame.git
+  -- ^ [^@]+ @ ([^:]+)    : (.+)        / (%S+)
+  --
+  --   https://  github.com / user_or_org / reponame
+  -- ^ https?:// ([^/]+)    / (.+)        / (%S+)
+  --
+  --   ssh:// git   @ github.com / user_or_org / reponame.git
+  -- ^ ssh:// [^@]+ @ ([^/]+)    / (.+)        / (%S+)
   local protocol = "ssh"
   local pattern = "^[^@]+@([^:]+):(.+)/(%S+)"
   if string.find(url, "^https?://") then
