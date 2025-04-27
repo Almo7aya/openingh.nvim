@@ -38,15 +38,38 @@ function M.parse_gh_remote(url)
   -- https://github.com/user_or_org/reponame
   -- https://gitlab.com/user_or_org/group/reponame
   -- git@some.github.com:user_or_org/reponame.git
+  -- git@work:user_or_org/reponame.git
   -- ssh://git@some.github.com/user_or_org/reponame.git
   -- ssh://org-12345@some.github.com/org/reponame.git
-  local matches = { string.find(url, "^.+[@/]([%w%.]+%.%w+)[/:](.+)/(%S+)") }
+
+  -- pattern reference: https://www.lua.org/manual/5.4/manual.html#6.4.1
+  local protocol = "ssh"
+  local pattern = "^[^@]+@([^:]+):(.+)/(%S+)"
+  if string.find(url, "^https?://") then
+    protocol = "http"
+    pattern = "^https?://([^/]+)/(.+)/(%S+)"
+  elseif string.find(url, "^ssh://") then
+    protocol = "ssh"
+    pattern = "^ssh://[^@]+@([^/]+)/(.+)/(%S+)"
+  end
+
+  local matches = { string.find(url, pattern) }
   if matches[1] == nil then
     return nil
   end
 
   local _, _, host, user_or_org, reponame = unpack(matches)
-  return { host = host, user_or_org = user_or_org, reponame = string.gsub(reponame, "%.git$", "") }
+  return { protocol = protocol, host = host, user_or_org = user_or_org, reponame = string.gsub(reponame, "%.git$", "") }
+end
+
+-- resolve the host with ssh
+function M.resolve_ssh_host(host)
+  local ssh_config = vim.fn.system("ssh -G " .. host)
+  local resolved_hostname = ssh_config:match("hostname%s+(%S+)")
+  if resolved_hostname then
+    return resolved_hostname
+  end
+  return host
 end
 
 -- get the default push remote
