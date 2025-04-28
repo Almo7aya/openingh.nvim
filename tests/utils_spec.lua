@@ -52,9 +52,16 @@ end)
 
 
 describe("parse_gh_remote", function ()
+    it("test invalid input", function ()
+        local url = "invalid remote url"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Nil(output)
+    end)
+
     it("test http format", function ()
         local url = "http://github.com/user/digital_repo.git"
         local output = utils.parse_gh_remote(url)
+        assert.is.Equal("http", output.protocol)
         assert.is.Equal("github.com", output.host)
         assert.is.Equal("user", output.user_or_org)
         assert.is.Equal("digital_repo", output.reponame)
@@ -63,23 +70,125 @@ describe("parse_gh_remote", function ()
     it("test https format", function ()
         local url = "https://github.com/user/digital_repo"
         local output = utils.parse_gh_remote(url)
+        assert.is.Equal("http", output.protocol)
         assert.is.Equal("github.com", output.host)
         assert.is.Equal("user", output.user_or_org)
         assert.is.Equal("digital_repo", output.reponame)
     end)
 
-    it("test ssh format", function ()
-        local url = "ssh://git@some.gitlab.com/user/digital_repo.git"
+    it("test https format with subdomain", function ()
+        local url = "https://some.github.com/user/digital_repo"
         local output = utils.parse_gh_remote(url)
+        assert.is.Equal("http", output.protocol)
+        assert.is.Equal("some.github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test https format with subgroup", function ()
+        local url = "https://gitlab.com/org/group/digital_repo"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("http", output.protocol)
+        assert.is.Equal("gitlab.com", output.host)
+        assert.is.Equal("org/group", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test https format with subdomain, subgroup, and suffix", function ()
+        local url = "https://some.gitlab.com/org/group/digital_repo.git"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("http", output.protocol)
         assert.is.Equal("some.gitlab.com", output.host)
+        assert.is.Equal("org/group", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test ssh format", function ()
+        local url = "ssh://git@github.com/user/digital_repo.git"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
+        assert.is.Equal("github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test ssh format without suffix", function ()
+        local url = "ssh://git@github.com/user/digital_repo"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
+        assert.is.Equal("github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test ssh format with custom user, subdomain, subgroup, and suffix", function ()
+        local url = "ssh://my-user123@some.github.com/org/group/digital_repo"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
+        assert.is.Equal("some.github.com", output.host)
+        assert.is.Equal("org/group", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test ssh format with custom host", function ()
+        local url = "ssh://git@work/user/digital_repo"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
+        assert.is.Equal("work", output.host)
         assert.is.Equal("user", output.user_or_org)
         assert.is.Equal("digital_repo", output.reponame)
     end)
 
     it("test git@ format", function ()
-        local url = "git@github.com/user/digital_repo.git"
+        local url = "git@github.com:user/digital_repo.git"
         local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
         assert.is.Equal("github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test git@ format without suffix", function ()
+        local url = "git@github.com:user/digital_repo"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
+        assert.is.Equal("github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test git@ format with subdomain", function ()
+        local url = "git@some.github.com:user/digital_repo.git"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
+        assert.is.Equal("some.github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test git@ format with subgroup", function ()
+        local url = "git@gitlab.com:org/group/digital_repo.git"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
+        assert.is.Equal("gitlab.com", output.host)
+        assert.is.Equal("org/group", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test git@ format with custom user", function ()
+        local url = "my-user123@some.github.com:user/digital_repo.git"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
+        assert.is.Equal("some.github.com", output.host)
+        assert.is.Equal("user", output.user_or_org)
+        assert.is.Equal("digital_repo", output.reponame)
+    end)
+
+    it("test git@ format with custom host", function ()
+        local url = "git@work:user/digital_repo.git"
+        local output = utils.parse_gh_remote(url)
+        assert.is.Equal("ssh", output.protocol)
+        assert.is.Equal("work", output.host)
         assert.is.Equal("user", output.user_or_org)
         assert.is.Equal("digital_repo", output.reponame)
     end)

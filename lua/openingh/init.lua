@@ -20,7 +20,12 @@ function M.setup()
     return
   end
 
-  M.repo_url = string.format("http://%s/%s/%s", gh.host, gh.user_or_org, gh.reponame)
+  local resolved_host = gh.host
+  if gh.protocol == "ssh" then
+    resolved_host = utils.resolve_ssh_host(gh.host)
+  end
+
+  M.repo_url = string.format("http://%s/%s/%s", resolved_host, gh.user_or_org, gh.reponame)
 end
 
 M.priority = { BRANCH = 1, COMMIT = 2 }
