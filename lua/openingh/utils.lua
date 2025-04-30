@@ -39,6 +39,8 @@ function M.parse_gh_remote(url)
   -- https://gitlab.com/user_or_org/group/reponame
   -- git@some.github.com:user_or_org/reponame.git
   -- git@work:user_or_org/reponame.git
+  -- some.github.com:user_or_org/reponame.git
+  -- work:user_or_org/reponame.git
   -- ssh://git@some.github.com/user_or_org/reponame.git
   -- ssh://org-12345@some.github.com/org/reponame.git
 
@@ -52,22 +54,26 @@ function M.parse_gh_remote(url)
   -- %S+   matches one or more non-whitespace characters
   --
   -- same patterns with spacing for readability:
+  --   https://  github.com / user_or_org / reponame
+  -- ^ https?:// ([^/]+)    / (.+)        / (%S+)
+  --
   --   git   @ github.com : user_or_org / reponame.git
   -- ^ [^@]+ @ ([^:]+)    : (.+)        / (%S+)
   --
-  --   https://  github.com / user_or_org / reponame
-  -- ^ https?:// ([^/]+)    / (.+)        / (%S+)
+  --   github.com : user_or_org / reponame.git
+  -- ^ ([^:]+)    : (.+)        / (%S+)
   --
   --   ssh:// git   @ github.com / user_or_org / reponame.git
   -- ^ ssh:// [^@]+ @ ([^/]+)    / (.+)        / (%S+)
   local protocol = "ssh"
-  local pattern = "^[^@]+@([^:]+):(.+)/(%S+)"
+  local pattern = "([^:]+):(.+)/(%S+)"
   if string.find(url, "^https?://") then
     protocol = "http"
     pattern = "^https?://([^/]+)/(.+)/(%S+)"
   elseif string.find(url, "^ssh://") then
-    protocol = "ssh"
     pattern = "^ssh://[^@]+@([^/]+)/(.+)/(%S+)"
+  elseif string.find(url, "^[^@]+@[^:]+:") then
+    pattern = "^[^@]+@([^:]+):(.+)/(%S+)"
   end
 
   local matches = { string.find(url, pattern) }
