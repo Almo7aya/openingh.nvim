@@ -73,3 +73,12 @@ describe("OpenInGHRepo", function()
     assert.truthy(status)
   end)
 end)
+
+describe("OpenInGHCommit", function()
+  it("opens a URL with a link to the commit specified", function()
+    vim.cmd('OpenInGHCommit "1b9ffd2"')
+    local status = vim.g.OPENINGH_RESULT
+    local expected = "/commit/1b9ffd2"
+    assert.equal(expected, status:sub(-#expected))
+  end)
+end)

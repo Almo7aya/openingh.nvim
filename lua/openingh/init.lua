@@ -94,6 +94,18 @@ function M.get_repo_url(priority)
   return url
 end
 
+function M.get_commit_url(commit)
+  -- make sure to update the current directory
+  M.setup()
+  if M.is_no_git_origin then
+    utils.print_no_remote_message()
+    return
+  end
+
+  local url = M.repo_url .. "/commit/" .. commit
+  return url
+end
+
 function M.open_url(url)
   if not utils.open_url(url) then
     utils.notify("Could not open the built URL " .. url, vim.log.levels.ERROR)

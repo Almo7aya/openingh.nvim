@@ -73,3 +73,20 @@ end, {
   register = vim.g.openingh_copy_to_register,
   bang = true,
 })
+
+vim.api.nvim_create_user_command("OpenInGHCommit", function(opts)
+  local url
+
+  local commit = opts.fargs[1]
+  url = openingh.get_commit_url(commit)
+
+  if opts.reg == "" then
+    openingh.open_url(url)
+  else
+    vim.fn.setreg(opts.reg, url)
+    print("URL put into register " .. opts.reg)
+  end
+end, {
+  register = vim.g.openingh_copy_to_register,
+  bang = true,
+})
