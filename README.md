@@ -39,6 +39,9 @@ end)
 - `:OpenInGHRepo`
   - Opens the project's git repository page in GitHub.
 
+- `:OpenInGHCommit "<COMMIT_SHA>"`
+  - Opens the commit sha, passed as its first argument, in GitHub. The sha must be in quotes.
+
 - `:OpenInGHFile`
   - Opens the current file page in GitHub. This command supports ranges.
 
